@@ -16,6 +16,8 @@ import json
 import numpy as np
 import pandas as pd
 import joblib
+import sklearn
+print(f"sklearn version on server: {sklearn.__version__}")
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -111,9 +113,26 @@ def load_assets():
 
 try:
     MODELS, FEATURE_CONFIG = load_assets()
-except FileNotFoundError as e:
-    print(f"WARNING: {e}")
-    MODELS, FEATURE_CONFIG = {}, {}
+except Exception as e:
+    # Print the FULL error so it appears in Render logs
+    import traceback
+    print("=" * 60)
+    print("STARTUP ERROR - could not load models:")
+    print(str(e))
+    traceback.print_exc()
+    print("Working directory:", os.getcwd())
+    print("Contents of MODELS_DIR:")
+    models_path = os.path.abspath(MODELS_DIR)
+    print("  Resolved path:", models_path)
+    if os.path.exists(models_path):
+        for f in sorted(os.listdir(models_path)):
+            print("  -", f)
+    else:
+        print("  DIRECTORY DOES NOT EXIST")
+    print("=" * 60)
+    # Exit with error so Render marks the deploy as failed
+    # rather than silently serving a broken app
+    raise SystemExit(1)
 
 # ----------------------------------------------------------------
 # REQUEST / RESPONSE SCHEMAS
