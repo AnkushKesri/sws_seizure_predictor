@@ -1,14 +1,5 @@
 """
 main.py -- FastAPI backend for Sturge-Weber Seizure Onset Prediction
---------------------------------------------------------------------
-Install dependencies:
-    pip install fastapi uvicorn joblib scikit-learn numpy pandas
-
-Run locally:
-    uvicorn main:app --reload --port 8000
-
-API docs:
-    http://localhost:8000/docs
 """
 
 import os
@@ -16,8 +7,6 @@ import json
 import numpy as np
 import pandas as pd
 import joblib
-import sklearn
-print(f"sklearn version on server: {sklearn.__version__}")
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -88,8 +77,7 @@ def load_assets():
     config_path = os.path.join(MODELS_DIR, "feature_config.json")
     if not os.path.exists(config_path):
         raise FileNotFoundError(
-            f"feature_config.json not found in '{MODELS_DIR}'. "
-            f"Run inference() with save_models=True first."
+            f"feature_config.json not found in '{MODELS_DIR}'."
         )
 
     with open(config_path) as f:
@@ -111,28 +99,7 @@ def load_assets():
     return models, feature_config
 
 
-try:
-    MODELS, FEATURE_CONFIG = load_assets()
-except Exception as e:
-    # Print the FULL error so it appears in Render logs
-    import traceback
-    print("=" * 60)
-    print("STARTUP ERROR - could not load models:")
-    print(str(e))
-    traceback.print_exc()
-    print("Working directory:", os.getcwd())
-    print("Contents of MODELS_DIR:")
-    models_path = os.path.abspath(MODELS_DIR)
-    print("  Resolved path:", models_path)
-    if os.path.exists(models_path):
-        for f in sorted(os.listdir(models_path)):
-            print("  -", f)
-    else:
-        print("  DIRECTORY DOES NOT EXIST")
-    print("=" * 60)
-    # Exit with error so Render marks the deploy as failed
-    # rather than silently serving a broken app
-    raise SystemExit(1)
+MODELS, FEATURE_CONFIG = load_assets()
 
 # ----------------------------------------------------------------
 # REQUEST / RESPONSE SCHEMAS
@@ -146,16 +113,16 @@ class PredictRequest(BaseModel):
     sex:            int
 
 class ModelTypeResult(BaseModel):
-    fold_probabilities:  list   # per-fold probs, useful for seeing fold variance during testing
-    average_probability: float  # mean across 5 folds for this model type
-    prediction:          int    # 0 or 1 based on average_probability >= 0.5
+    fold_probabilities:  list
+    average_probability: float
+    prediction:          int
 
 class PredictResponse(BaseModel):
     prediction:       int
     prediction_label: str
-    probability:      float   # final consensus probability (Method 2)
+    probability:      float
     risk_level:       str
-    model_breakdown:  dict    # keyed by display name e.g. "Random Forest"
+    model_breakdown:  dict
     disclaimer:       str
 
 # ----------------------------------------------------------------
@@ -163,9 +130,6 @@ class PredictResponse(BaseModel):
 # ----------------------------------------------------------------
 
 def run_inference(feature_values: dict) -> PredictResponse:
-    if not MODELS:
-        raise HTTPException(status_code=503, detail="Models not loaded.")
-
     final_features = FEATURE_CONFIG["final_features"]
     n_folds        = FEATURE_CONFIG["nFold"]
 
@@ -176,7 +140,10 @@ def run_inference(feature_values: dict) -> PredictResponse:
     # Validate all values are 0 or 1
     for feat, val in feature_values.items():
         if val not in (0, 1):
-            raise HTTPException(status_code=422, detail=f"Feature '{feat}' must be 0 or 1, got {val}.")
+            raise HTTPException(
+                status_code=422,
+                detail=f"Feature '{feat}' must be 0 or 1, got {val}."
+            )
 
     # Build input DataFrame in the exact feature order used during training
     try:
@@ -213,8 +180,6 @@ def run_inference(feature_values: dict) -> PredictResponse:
     else:
         risk_level = "Low"
 
-    # Build per-model-type breakdown for testing/transparency
-    # Map file_key back to display name e.g. "random_forest" -> "Random Forest"
     file_key_to_display = {v: k for k, v in MODEL_TYPES.items()}
     model_breakdown = {
         file_key_to_display[file_key]: ModelTypeResult(
