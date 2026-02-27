@@ -1,0 +1,4 @@
+pycache/
+*.pyc
+.DS_Store
+sws_env/

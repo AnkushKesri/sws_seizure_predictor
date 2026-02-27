@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SWS Seizure Onset Predictor | BCH & Kennedy Krieger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:        #0B2545;
+  --navy-mid:    #1B3A6B;
+  --navy-light:  #E8EEF7;
+  --navy-faint:  #F3F6FB;
+  --crimson:     #A0001C;
+  --crimson-lt:  #FBE9EC;
+  --gold:        #C8923A;
+  --gold-light:  #FDF5EA;
+  --teal:        #0D6B6B;
+  --teal-light:  #E5F4F4;
+  --green:       #1A6B3A;
+  --green-light: #E8F5EE;
+  --ink:         #1A1A2E;
+  --ink-mid:     #4A4A6A;
+  --ink-muted:   #7A7A9A;
+  --border:      #D4D9E8;
+  --white:       #FFFFFF;
+  --off-white:   #F8F9FC;
+  --shadow-sm:   0 1px 4px rgba(11,37,69,0.08);
+  --radius:      8px;
+  --radius-lg:   14px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); color: var(--ink); font-size: 16px; line-height: 1.65; min-height: 100vh; }
+
+/* INSTITUTIONAL BAR */
+.inst-bar { background: var(--navy); padding: 10px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.inst-logos { display: flex; align-items: center; gap: 28px; }
+.logo-bch .logo-main, .logo-kki .logo-main { font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 13px; color: white; letter-spacing: 0.01em; line-height: 1.2; }
+.logo-bch .logo-sub, .logo-kki .logo-sub { font-size: 9px; color: rgba(255,255,255,0.55); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; }
+.logo-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.2); }
+.collab-tag { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 300; }
+
+/* HERO */
+.hero { background: linear-gradient(155deg, var(--navy) 0%, var(--navy-mid) 60%, #1a4080 100%); color: white; padding: 56px 40px 52px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 80% 20%, rgba(200,146,58,0.08) 0%, transparent 50%), radial-gradient(circle at 10% 80%, rgba(13,107,107,0.1) 0%, transparent 40%); pointer-events: none; }
+.hero-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,146,58,0.15); border: 1px solid rgba(200,146,58,0.35); border-radius: 20px; padding: 5px 14px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #F0C878; margin-bottom: 20px; }
+.hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: #F0C878; border-radius: 50%; animation: pulse 2.5s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+.hero h1 { font-family: 'Lora', serif; font-size: clamp(26px, 4vw, 40px); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; max-width: 680px; }
+.hero h1 em { font-style: italic; color: #A8C8F0; }
+.hero-desc { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 580px; line-height: 1.7; margin-bottom: 28px; font-weight: 300; }
+.hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+.hero-stat { display: flex; flex-direction: column; gap: 2px; }
+.hero-stat .num { font-family: 'Source Code Pro', monospace; font-size: 22px; font-weight: 500; color: #F0C878; line-height: 1; }
+.hero-stat .lbl { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.07em; text-transform: uppercase; }
+
+/* ABOUT */
+.about-section { background: var(--white); border-bottom: 1px solid var(--border); }
+.about-inner { max-width: 1100px; margin: 0 auto; padding: 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+.about-block { padding: 8px 32px 8px 0; border-right: 1px solid var(--border); margin-right: 32px; }
+.about-block:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.about-block h3 { font-family: 'Lora', serif; font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+.about-block p { font-size: 13.5px; color: var(--ink-mid); line-height: 1.65; }
+
+/* TOOL LAYOUT */
+.tool-wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; display: grid; grid-template-columns: 1fr 400px; gap: 28px; align-items: start; }
+
+/* FORM CARD */
+.form-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
+.card-header { background: var(--navy-faint); border-bottom: 1px solid var(--border); padding: 18px 28px; display: flex; align-items: center; gap: 10px; }
+.card-header h2 { font-family: 'Lora', serif; font-size: 17px; font-weight: 600; color: var(--navy); }
+.card-header .step-badge { margin-left: auto; background: var(--navy); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+.form-instructions { padding: 16px 28px; background: var(--gold-light); border-bottom: 1px solid #EDD9B0; font-size: 13px; color: #6B4A10; display: flex; gap: 10px; align-items: flex-start; }
+
+/* FEATURE ROWS */
+.feature-row { padding: 18px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; transition: background 0.12s; }
+.feature-row:hover { background: var(--navy-faint); }
+.feature-row.disabled { opacity: 0.45; pointer-events: none; }
+.feature-row.disabled:hover { background: transparent; }
+.feature-info { flex: 1; min-width: 0; }
+.feature-label { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 2px; }
+.feature-sublabel { font-size: 12px; color: var(--ink-muted); font-style: italic; }
+
+/* YES/NO BUTTONS */
+.yn-group { display: flex; border: 1.5px solid var(--border); border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+.yn-btn { padding: 7px 18px; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 500; border: none; background: var(--white); color: var(--ink-muted); cursor: pointer; transition: background 0.15s, color 0.15s; border-right: 1.5px solid var(--border); outline: none; }
+.yn-btn:last-child { border-right: none; }
+.yn-btn.active-yes { background: var(--green); color: white; }
+.yn-btn.active-no { background: var(--navy); color: white; }
+.yn-btn:not(.active-yes):not(.active-no):hover { background: var(--navy-light); color: var(--navy); }
+
+/* FEMALE/MALE BUTTONS */
+.fm-group { display: flex; border: 1.5px solid var(--border); border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+.fm-btn { padding: 7px 16px; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 500; border: none; background: var(--white); color: var(--ink-muted); cursor: pointer; transition: background 0.15s, color 0.15s; border-right: 1.5px solid var(--border); outline: none; }
+.fm-btn:last-child { border-right: none; }
+.fm-btn.active { background: var(--navy-mid); color: white; }
+.fm-btn:not(.active):hover { background: var(--navy-light); color: var(--navy); }
+
+/* DEPENDS NOTE */
+.depends-note { font-size: 11px; color: var(--ink-muted); font-style: italic; padding: 6px 28px 12px 28px; margin-top: -10px; border-bottom: 1px solid var(--border); background: var(--navy-faint); }
+
+/* PREDICT BUTTON */
+.predict-section { padding: 20px 28px; background: var(--navy-faint); border-top: 1px solid var(--border); }
+.btn-predict { width: 100%; height: 52px; background: var(--navy); color: white; border: none; border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.03em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.15s, box-shadow 0.15s, transform 0.1s; box-shadow: 0 2px 8px rgba(11,37,69,0.25); }
+.btn-predict:hover { background: var(--navy-mid); box-shadow: 0 4px 16px rgba(11,37,69,0.3); }
+.btn-predict:active { transform: scale(0.99); }
+.btn-predict:disabled { background: var(--ink-muted); box-shadow: none; cursor: not-allowed; }
+.spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+.btn-predict.loading .spinner { display: block; }
+.btn-predict.loading .btn-text { opacity: 0.7; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.predict-note { margin-top: 10px; font-size: 12px; color: var(--ink-muted); text-align: center; }
+
+/* API STATUS */
+.api-status { padding: 10px 28px; display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--ink-muted); border-top: 1px solid var(--border); }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-muted); flex-shrink: 0; }
+.status-dot.ok { background: var(--green); }
+.status-dot.error { background: var(--crimson); }
+
+/* RESULTS PANEL */
+.results-panel { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+.empty-state { background: var(--white); border: 1.5px dashed var(--border); border-radius: var(--radius-lg); padding: 44px 28px; text-align: center; }
+.empty-state .empty-icon { width: 48px; height: 48px; margin: 0 auto 14px; opacity: 0.2; }
+.empty-state p { font-size: 14px; color: var(--ink-muted); line-height: 1.6; }
+
+/* RESULT CARDS */
+.result-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s ease; }
+.result-card.visible { opacity: 1; transform: translateY(0); }
+.consensus-card { border-width: 2px; }
+.consensus-card.risk-High     { border-color: var(--crimson); }
+.consensus-card.risk-Moderate { border-color: var(--gold); }
+.consensus-card.risk-Low      { border-color: var(--green); }
+.consensus-top { padding: 20px 24px 16px; }
+.risk-badge { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; }
+.risk-High     .risk-badge { background: var(--crimson-lt); color: var(--crimson); }
+.risk-Moderate .risk-badge { background: var(--gold-light); color: #7A4800; }
+.risk-Low      .risk-badge { background: var(--green-light); color: var(--green); }
+.verdict { font-family: 'Lora', serif; font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--navy); letter-spacing: -0.01em; }
+.prob-section { padding: 0 24px 20px; border-bottom: 1px solid var(--border); }
+.prob-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.prob-label { font-size: 12px; color: var(--ink-muted); }
+.prob-value { font-family: 'Source Code Pro', monospace; font-size: 20px; font-weight: 500; color: var(--navy); }
+.prob-track { height: 7px; background: var(--border); border-radius: 7px; overflow: hidden; }
+.prob-fill { height: 100%; width: 0%; border-radius: 7px; transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1); }
+.risk-High     .prob-fill { background: var(--crimson); }
+.risk-Moderate .prob-fill { background: var(--gold); }
+.risk-Low      .prob-fill { background: var(--green); }
+.breakdown-header { padding: 14px 20px 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-muted); border-bottom: 1px solid var(--border); }
+.model-row { padding: 11px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.model-row:last-child { border-bottom: none; }
+.model-name { font-size: 13px; font-weight: 500; flex: 1; color: var(--ink); }
+.model-prob { font-family: 'Source Code Pro', monospace; font-size: 12.5px; color: var(--ink-muted); min-width: 38px; text-align: right; }
+.fold-bars { display: flex; gap: 3px; align-items: flex-end; height: 18px; }
+.fold-bar { width: 5px; background: var(--border); border-radius: 2px; }
+.model-chip { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
+.chip-pos { background: var(--crimson-lt); color: var(--crimson); }
+.chip-neg { background: var(--green-light); color: var(--green); }
+.disclaimer-card { padding: 16px 20px; font-size: 12.5px; color: var(--ink-mid); line-height: 1.6; }
+.disclaimer-card strong { display: block; color: var(--navy); font-weight: 600; margin-bottom: 6px; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; }
+
+/* FOOTER */
+footer { background: var(--navy); color: rgba(255,255,255,0.5); text-align: center; padding: 28px 40px; font-size: 12.5px; line-height: 1.7; border-top: 3px solid var(--gold); }
+footer .footer-logos { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 12px; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; color: rgba(255,255,255,0.6); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .tool-wrapper { grid-template-columns: 1fr; padding: 24px 20px 60px; }
+  .about-inner { grid-template-columns: 1fr; padding: 24px 20px; }
+  .about-block { border-right: none; border-bottom: 1px solid var(--border); margin-right: 0; padding-right: 0; padding-bottom: 20px; margin-bottom: 20px; }
+  .about-block:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .inst-bar { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 20px; }
+  .hero { padding: 36px 20px 32px; }
+  .results-panel { position: static; }
+  .collab-tag { display: none; }
+}
+
+.fade-in { opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s ease forwards; }
+.fade-in:nth-child(1) { animation-delay: 0.05s; }
+.fade-in:nth-child(2) { animation-delay: 0.12s; }
+.fade-in:nth-child(3) { animation-delay: 0.18s; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="inst-bar">
+  <div class="inst-logos">
+    <div class="logo-bch">
+      <div class="logo-main">Boston Children's Hospital</div>
+      <div class="logo-sub">Until Every Child Is Well</div>
+    </div>
+    <div class="logo-divider"></div>
+    <div class="logo-kki">
+      <div class="logo-main">Kennedy Krieger Institute</div>
+      <div class="logo-sub">Improving Children's Lives</div>
+    </div>
+  </div>
+  <div class="collab-tag">Collaborative Research Tool</div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Sturge-Weber Syndrome</div>
+    <h1>Predict <em>Seizure Onset Risk</em><br>in the Next Two Years</h1>
+    <p class="hero-desc">A clinical decision support tool developed through collaboration between Boston Children's Hospital and Kennedy Krieger Institute. Uses an ensemble of machine learning models trained on SWS patient data to estimate the probability of seizure onset within 24 months.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">15</span><span class="lbl">Models in Ensemble</span></div>
+      <div class="hero-stat"><span class="num">5</span><span class="lbl">CV Folds</span></div>
+      <div class="hero-stat"><span class="num">3</span><span class="lbl">Algorithm Types</span></div>
+      <div class="hero-stat"><span class="num">5</span><span class="lbl">Clinical Features</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="about-section">
+  <div class="about-inner">
+    <div class="about-block fade-in">
+      <h3>About This Tool</h3>
+      <p>This tool applies machine learning to predict seizure onset in patients diagnosed with Sturge-Weber Syndrome (SWS), a rare neurocutaneous disorder. Predictions are based on five clinically obtained binary features and are intended to support, not replace, physician judgment.</p>
+    </div>
+    <div class="about-block fade-in">
+      <h3>How It Works</h3>
+      <p>Three model architectures (Random Forest, Gaussian SVC, Linear SVC) are each trained across five cross-validation folds, yielding 15 models total. Predictions use a two-stage ensemble: averaging within each model type across folds, then averaging across the three types for the final probability estimate.</p>
+    </div>
+    <div class="about-block fade-in">
+      <h3>Important Limitations</h3>
+      <p>This tool is validated on a specific SWS patient cohort and results may not generalize to all populations. The output is a probabilistic estimate and must be interpreted in the context of the full clinical picture by a qualified healthcare provider.</p>
+    </div>
+  </div>
+</section>
+
+<main class="tool-wrapper">
+  <div>
+    <div class="form-card">
+      <div class="card-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B2545" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <h2>Enter Patient Information</h2>
+        <span class="step-badge">5 Features</span>
+      </div>
+
+      <div class="form-instructions">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Select the appropriate value for each feature based on the patient's clinical presentation. All fields are required before calculating.
+      </div>
+
+      <div class="feature-row" id="row-ethnicity">
+        <div class="feature-info">
+          <div class="feature-label">Ethnicity (Hispanic or Latino)</div>
+          <div class="feature-sublabel">Patient self-identified ethnicity</div>
+        </div>
+        <div class="yn-group">
+          <button class="yn-btn" onclick="setFeature('ethnicity', 1, this, 'yes')">Yes</button>
+          <button class="yn-btn" onclick="setFeature('ethnicity', 0, this, 'no')">No</button>
+        </div>
+      </div>
+
+      <div class="feature-row" id="row-treatment">
+        <div class="feature-info">
+          <div class="feature-label">Presymptomatic Treatment done for SWS</div>
+          <div class="feature-sublabel">Any treatment initiated prior to symptom onset</div>
+        </div>
+        <div class="yn-group">
+          <button class="yn-btn" onclick="setFeature('treatment', 1, this, 'yes')">Yes</button>
+          <button class="yn-btn" onclick="setFeature('treatment', 0, this, 'no')">No</button>
+        </div>
+      </div>
+
+      <div class="feature-row disabled" id="row-treatments___1">
+        <div class="feature-info">
+          <div class="feature-label">Treatment with Low-dose Aspirin</div>
+          <div class="feature-sublabel">Low-dose aspirin as part of presymptomatic treatment</div>
+        </div>
+        <div class="yn-group">
+          <button class="yn-btn" onclick="setFeature('treatments___1', 1, this, 'yes')">Yes</button>
+          <button class="yn-btn active-no" onclick="setFeature('treatments___1', 0, this, 'no')">No</button>
+        </div>
+      </div>
+      <div class="depends-note" id="note-treatments___1">Enabled only when Presymptomatic Treatment is Yes</div>
+
+      <div class="feature-row" id="row-forehead">
+        <div class="feature-info">
+          <div class="feature-label">Forehead involved in Port Wine Birthmark</div>
+          <div class="feature-sublabel">PWB extends to or includes the forehead region</div>
+        </div>
+        <div class="yn-group">
+          <button class="yn-btn" onclick="setFeature('forehead', 1, this, 'yes')">Yes</button>
+          <button class="yn-btn" onclick="setFeature('forehead', 0, this, 'no')">No</button>
+        </div>
+      </div>
+
+      <div class="feature-row" id="row-sex">
+        <div class="feature-info">
+          <div class="feature-label">Sex</div>
+          <div class="feature-sublabel">Biological sex at birth</div>
+        </div>
+        <div class="fm-group">
+          <button class="fm-btn" onclick="setFeature('sex', 0, this, 'fm')">Female</button>
+          <button class="fm-btn" onclick="setFeature('sex', 1, this, 'fm')">Male</button>
+        </div>
+      </div>
+
+      <div class="api-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Connecting to prediction API...</span>
+      </div>
+
+      <div class="predict-section">
+        <button class="btn-predict" id="predictBtn" onclick="runPrediction()">
+          <div class="spinner"></div>
+          <span class="btn-text">Calculate Seizure Onset Risk</span>
+        </button>
+        <p class="predict-note">15-model ensemble with Method 2 aggregation</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-panel" id="resultsPanel">
+    <div class="empty-state" id="emptyState">
+      <svg class="empty-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="24" r="20"/><path d="M24 16v8m0 6h.01"/></svg>
+      <p>Complete the patient information form and click <strong>Calculate Seizure Onset Risk</strong> to generate a prediction.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logos">
+    <span>Boston Children's Hospital</span>
+    <span style="opacity:0.3">|</span>
+    <span>Kennedy Krieger Institute</span>
+  </div>
+  <p>This tool is intended for <strong style="color:rgba(255,255,255,0.8)">research and clinical decision support purposes only</strong>.<br>
+  It does not constitute medical advice and must not replace the clinical judgment of a qualified physician.<br>
+  For questions, contact the SWS research teams at BCH or Kennedy Krieger Institute.</p>
+  <p style="margin-top:10px;font-size:11.5px;opacity:0.4;">Developed in collaboration with Boston Children's Hospital and Kennedy Krieger Institute &bull; 15-model ensemble (Random Forest, Gaussian SVC, Linear SVC) &bull; Features selected via FIBE algorithm</p>
+</footer>
+
+<script>
+// UPDATE THIS to your Render backend URL once deployed
+// e.g. "https://sws-seizure-predictor.onrender.com"
+// Leave as localhost for local testing
+const API_BASE = "http://localhost:8000";
+
+const featureValues = {
+  ethnicity:      null,
+  treatment:      null,
+  forehead:       null,
+  treatments___1: 0,
+  sex:            null,
+};
+
+function setFeature(key, value, btn, type) {
+  featureValues[key] = value;
+
+  if (type === 'yes' || type === 'no') {
+    const group = btn.closest('.yn-group');
+    group.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('active-yes', 'active-no'));
+    btn.classList.add(type === 'yes' ? 'active-yes' : 'active-no');
+  } else if (type === 'fm') {
+    const group = btn.closest('.fm-group');
+    group.querySelectorAll('.fm-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  if (key === 'treatment') {
+    const depRow  = document.getElementById('row-treatments___1');
+    const depNote = document.getElementById('note-treatments___1');
+    if (value === 1) {
+      depRow.classList.remove('disabled');
+      depNote.style.display = 'none';
+    } else {
+      depRow.classList.add('disabled');
+      depNote.style.display = 'block';
+      featureValues['treatments___1'] = 0;
+      const aspBtns = depRow.querySelectorAll('.yn-btn');
+      aspBtns[0].classList.remove('active-yes');
+      aspBtns[1].classList.add('active-no');
+    }
+  }
+}
+
+function validate() {
+  return ['ethnicity', 'treatment', 'forehead', 'sex'].every(k => featureValues[k] !== null);
+}
+
+async function checkApi() {
+  try {
+    const res = await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(4000) });
+    setStatus(res.ok, res.ok ? `API connected (${API_BASE})` : 'API reachable but returned an error');
+  } catch {
+    setStatus(false, `Cannot reach API at ${API_BASE}`);
+  }
+}
+
+function setStatus(ok, msg) {
+  document.getElementById('statusDot').className = 'status-dot ' + (ok ? 'ok' : 'error');
+  document.getElementById('statusText').textContent = msg;
+}
+
+async function runPrediction() {
+  if (!validate()) { alert('Please answer all questions before calculating.'); return; }
+  const btn = document.getElementById('predictBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+  try {
+    const res = await fetch(`${API_BASE}/predict`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ethnicity:      featureValues.ethnicity,
+        treatment:      featureValues.treatment,
+        forehead:       featureValues.forehead,
+        treatments___1: featureValues.treatments___1,
+        sex:            featureValues.sex,
+      })
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.detail || 'Request failed'); }
+    renderResults(await res.json());
+  } catch(e) {
+    alert('Prediction failed: ' + e.message);
+  } finally {
+    btn.classList.remove('loading'); btn.disabled = false;
+  }
+}
+
+function renderResults(data) {
+  const panel   = document.getElementById('resultsPanel');
+  const probPct = Math.round(data.probability * 100);
+  const riskCls = 'risk-' + data.risk_level;
+
+  const breakdownRows = Object.entries(data.model_breakdown).map(([name, res]) => {
+    const bars = res.fold_probabilities.map(p => {
+      const h = Math.max(3, Math.round(p * 18));
+      const c = p >= 0.5 ? 'var(--crimson)' : 'var(--green)';
+      return `<div class="fold-bar" style="height:${h}px;background:${c}"></div>`;
+    }).join('');
+    return `<div class="model-row">
+      <span class="model-name">${name}</span>
+      <div class="fold-bars">${bars}</div>
+      <span class="model-prob">${Math.round(res.average_probability*100)}%</span>
+      <span class="model-chip ${res.prediction===1?'chip-pos':'chip-neg'}">${res.prediction===1?'Positive':'Negative'}</span>
+    </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div class="result-card consensus-card ${riskCls}" id="card-consensus">
+      <div class="consensus-top">
+        <div class="risk-badge">${data.risk_level} Risk</div>
+        <div class="verdict">${data.prediction_label}</div>
+      </div>
+      <div class="prob-section">
+        <div class="prob-header">
+          <span class="prob-label">2-Year Seizure Onset Probability</span>
+          <span class="prob-value" id="probNum">0%</span>
+        </div>
+        <div class="prob-track"><div class="prob-fill" id="probFill"></div></div>
+      </div>
+      <div class="breakdown-header">Model Type Breakdown</div>
+      ${breakdownRows}
+    </div>
+    <div class="result-card" id="card-disc">
+      <div class="disclaimer-card">
+        <strong>Clinical Disclaimer</strong>
+        ${data.disclaimer}
+      </div>
+    </div>`;
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      document.getElementById('card-consensus')?.classList.add('visible');
+      setTimeout(() => document.getElementById('card-disc')?.classList.add('visible'), 120);
+      setTimeout(() => {
+        const fill = document.getElementById('probFill');
+        const num  = document.getElementById('probNum');
+        if (fill) fill.style.width = probPct + '%';
+        if (num)  animateNumber(num, 0, probPct, 800);
+      }, 180);
+    }, 30);
+  });
+
+  if (window.innerWidth < 900) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function animateNumber(el, from, to, dur) {
+  const start = performance.now();
+  (function step(now) {
+    const t = Math.min((now - start) / dur, 1);
+    el.textContent = Math.round(from + (to - from) * (1 - Math.pow(1 - t, 3))) + '%';
+    if (t < 1) requestAnimationFrame(step);
+  })(performance.now());
+}
+
+checkApi();
+setInterval(checkApi, 30000);
+</script>
+</body>
+</html>

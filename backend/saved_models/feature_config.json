@@ -1,0 +1,38 @@
+{
+  "final_features": [
+    "ethnicity",
+    "treatment",
+    "forehead",
+    "treatments___1",
+    "sex"
+  ],
+  "model_name": "consensus",
+  "nFold": 5,
+  "saved_model_files": {
+    "fold1": {
+      "Random Forest": "fold1_random_forest.joblib",
+      "Gaussian SVC": "fold1_gaussian_svc.joblib",
+      "Linear SVC": "fold1_linear_svc.joblib"
+    },
+    "fold2": {
+      "Random Forest": "fold2_random_forest.joblib",
+      "Gaussian SVC": "fold2_gaussian_svc.joblib",
+      "Linear SVC": "fold2_linear_svc.joblib"
+    },
+    "fold3": {
+      "Random Forest": "fold3_random_forest.joblib",
+      "Gaussian SVC": "fold3_gaussian_svc.joblib",
+      "Linear SVC": "fold3_linear_svc.joblib"
+    },
+    "fold4": {
+      "Random Forest": "fold4_random_forest.joblib",
+      "Gaussian SVC": "fold4_gaussian_svc.joblib",
+      "Linear SVC": "fold4_linear_svc.joblib"
+    },
+    "fold5": {
+      "Random Forest": "fold5_random_forest.joblib",
+      "Gaussian SVC": "fold5_gaussian_svc.joblib",
+      "Linear SVC": "fold5_linear_svc.joblib"
+    }
+  }
+}
