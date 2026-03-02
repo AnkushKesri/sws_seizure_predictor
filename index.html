@@ -37,9 +37,9 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 /* INSTITUTIONAL BAR */
 .inst-bar { background: var(--navy); padding: 10px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .inst-logos { display: flex; align-items: center; gap: 28px; }
-.logo-bch .logo-main, .logo-kki .logo-main { font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 13px; color: white; letter-spacing: 0.01em; line-height: 1.2; }
-.logo-bch .logo-sub, .logo-kki .logo-sub { font-size: 9px; color: rgba(255,255,255,0.55); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; }
-.logo-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.2); }
+.logo-img-bch { height: 44px; width: auto; display: block; filter: brightness(0) invert(1); }
+.logo-img-kki { height: 44px; width: auto; display: block; mix-blend-mode: screen; filter: brightness(1.8) saturate(0.4); }
+.logo-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
 .collab-tag { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 300; }
 
 /* HERO */
@@ -188,15 +188,9 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
 
 <div class="inst-bar">
   <div class="inst-logos">
-    <div class="logo-bch">
-      <div class="logo-main">Boston Children's Hospital</div>
-      <div class="logo-sub">Until Every Child Is Well</div>
-    </div>
+    <img src="Boston_Children_s_Hospital.svg" alt="Boston Children's Hospital" class="logo-img-bch"/>
     <div class="logo-divider"></div>
-    <div class="logo-kki">
-      <div class="logo-main">Kennedy Krieger Institute</div>
-      <div class="logo-sub">Improving Children's Lives</div>
-    </div>
+    <img src="Kennedy_Krieger_Institute.jpeg" alt="Kennedy Krieger Institute" class="logo-img-kki"/>
   </div>
   <div class="collab-tag">Collaborative Research Tool</div>
 </div>
@@ -327,9 +321,9 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
 
 <footer>
   <div class="footer-logos">
-    <span>Boston Children's Hospital</span>
+    <img src="Boston_Children_s_Hospital.svg" alt="Boston Children's Hospital" style="height:28px;width:auto;filter:brightness(0) invert(1);opacity:0.7;"/>
     <span style="opacity:0.3">|</span>
-    <span>Kennedy Krieger Institute</span>
+    <img src="Kennedy_Krieger_Institute.jpeg" alt="Kennedy Krieger Institute" style="height:28px;width:auto;mix-blend-mode:screen;filter:brightness(2) saturate(0.3);opacity:0.7;"/>
   </div>
   <p>This tool is intended for <strong style="color:rgba(255,255,255,0.8)">research and clinical decision support purposes only</strong>.<br>
   It does not constitute medical advice and must not replace the clinical judgment of a qualified physician.<br>
