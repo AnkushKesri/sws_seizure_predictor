@@ -188,16 +188,20 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
 
 <div class="inst-bar">
   <div class="inst-logos">
-    <img src="Boston_Childrens_Hospital_logo.svg" alt="Boston Children's Hospital" class="logo-img-bch"/>
+    <a href="https://www.childrenshospital.org/programs/sturge-weber-syndrome-program" target="_blank" rel="noopener">
+      <img src="Boston_Childrens_Hospital_logo.svg" alt="Boston Children's Hospital" class="logo-img-bch"/>
+    </a>
     <div class="logo-divider"></div>
-    <img src="Kennedy_Krieger_Institute_logo.svg" alt="Kennedy Krieger Institute" class="logo-img-kki"/>
+    <a href="https://www.kennedykrieger.org/patient-care/centers-and-programs/hunter-nelson-sturge-weber-center" target="_blank" rel="noopener">
+      <img src="Kennedy_Krieger_Institute_logo.svg" alt="Kennedy Krieger Institute" class="logo-img-kki"/>
+    </a>
   </div>
   <div class="collab-tag">Collaborative Research Tool</div>
 </div>
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">Sturge-Weber Syndrome</div>
+    <a href="https://www.ninds.nih.gov/health-information/disorders/sturge-weber-syndrome" target="_blank" rel="noopener" class="hero-eyebrow" style="font-size:13.5px;text-decoration:none;">Sturge-Weber Syndrome ?</a>
     <h1>Predict <em>Seizure Onset Risk</em><br>by the age of 2 Years</h1>
     <p class="hero-desc">A clinical decision support tool developed through collaboration between Boston Children's Hospital and Kennedy Krieger Institute. Uses an ensemble of machine learning models trained on SWS patient data to estimate the probability of seizure onset within 24 months.</p>
     <div class="hero-stats">
@@ -306,7 +310,7 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
           <div class="spinner"></div>
           <span class="btn-text">Calculate Seizure Onset Risk</span>
         </button>
-        <p class="predict-note">15-model ensemble with Method 2 aggregation</p>
+        <p class="predict-note">15-model ensemble &bull; averaged across 3 model types &times; 5 folds</p>
       </div>
     </div>
   </div>
@@ -321,20 +325,25 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
 
 <footer>
   <div class="footer-logos">
-    <img src="Boston_Childrens_Hospital_logo.svg" alt="Boston Children's Hospital" style="height:26px;width:auto;opacity:0.75;"/>
+    <a href="https://www.childrenshospital.org/programs/sturge-weber-syndrome-program" target="_blank" rel="noopener">
+      <img src="Boston_Childrens_Hospital_logo.svg" alt="Boston Children's Hospital" style="height:26px;width:auto;opacity:0.75;"/>
+    </a>
     <span style="opacity:0.3">|</span>
-    <img src="Kennedy_Krieger_Institute_logo.svg" alt="Kennedy Krieger Institute" style="height:26px;width:auto;opacity:0.75;"/>
+    <a href="https://www.kennedykrieger.org/patient-care/centers-and-programs/hunter-nelson-sturge-weber-center" target="_blank" rel="noopener">
+      <img src="Kennedy_Krieger_Institute_logo.svg" alt="Kennedy Krieger Institute" style="height:26px;width:auto;opacity:0.75;"/>
+    </a>
   </div>
   <p>This tool is intended for <strong style="color:rgba(255,255,255,0.8)">research and clinical decision support purposes only</strong>.<br>
   It does not constitute medical advice and must not replace the clinical judgment of a qualified physician.<br>
   For questions, contact the SWS research teams at BCH or Kennedy Krieger Institute.</p>
-  <p style="margin-top:10px;font-size:11.5px;opacity:0.4;">Developed in collaboration with Boston Children's Hospital and Kennedy Krieger Institute &bull; 15-model ensemble (Random Forest, Gaussian SVC, Linear SVC) &bull; Features selected via FIBE algorithm</p>
+  <p style="margin-top:10px;font-size:11.5px;opacity:0.4;">Developed in collaboration with Boston Children's Hospital and Kennedy Krieger Institute &bull; 15-model ensemble (Random Forest, Gaussian SVC, Linear SVC) &bull; Features selected via <a href="https://github.com/i3-research/fibe" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.6);text-decoration:underline;">FIBE algorithm</a></p>
 </footer>
 
 <script>
 // UPDATE THIS to your Render backend URL once deployed
 // e.g. "https://sws-seizure-predictor.onrender.com"
 // Leave as localhost for local testing
+// Made with Claude.ai - Ankush 030326
 const API_BASE = "https://sws-seizure-predictor.onrender.com";
 
 const featureValues = {
