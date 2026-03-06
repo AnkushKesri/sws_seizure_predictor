@@ -4,3 +4,4 @@ joblib
 scikit-learn==1.8.0
 numpy
 pandas
+python-multipart

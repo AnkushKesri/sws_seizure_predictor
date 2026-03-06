@@ -4,10 +4,14 @@ main.py -- FastAPI backend for Sturge-Weber Seizure Onset Prediction
 
 import os
 import json
+import secrets
 import numpy as np
 import pandas as pd
 import joblib
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -18,7 +22,9 @@ from pydantic import BaseModel
 app = FastAPI(
     title="Sturge-Weber Seizure Onset Predictor",
     description="Predicts 2-year seizure onset risk using a 15-model ensemble.",
-    version="1.0.0"
+    version="1.0.0",
+    docs_url=None,
+    redoc_url=None,
 )
 
 app.add_middleware(
@@ -28,6 +34,38 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ----------------------------------------------------------------
+# AUTH - credentials set ONLY in Render environment variables
+# Never hardcoded here. App refuses to start if not set.
+# ----------------------------------------------------------------
+
+security    = HTTPBasic()
+APP_USERNAME = os.getenv("APP_USERNAME")
+APP_PASSWORD = os.getenv("APP_PASSWORD")
+
+if not APP_USERNAME or not APP_PASSWORD:
+    raise RuntimeError(
+        "APP_USERNAME and APP_PASSWORD must be set as environment variables in Render."
+    )
+
+def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
+    ok_user = secrets.compare_digest(credentials.username.encode(), APP_USERNAME.encode())
+    ok_pass = secrets.compare_digest(credentials.password.encode(), APP_PASSWORD.encode())
+    if not (ok_user and ok_pass):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+
+# ----------------------------------------------------------------
+# SERVE STATIC FILES (logos + index.html from backend/static/)
+# ----------------------------------------------------------------
+
+STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+if os.path.exists(STATIC_DIR):
+    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 # ----------------------------------------------------------------
 # FEATURE METADATA
@@ -206,12 +244,16 @@ def run_inference(feature_values: dict) -> PredictResponse:
 # ROUTES
 # ----------------------------------------------------------------
 
-@app.get("/")
-def root():
-    return {"status": "running", "tool": "Sturge-Weber Seizure Onset Predictor"}
+@app.get("/", response_class=HTMLResponse)
+def serve_frontend(username: str = Depends(verify_credentials)):
+    index_path = os.path.join(STATIC_DIR, "index.html")
+    if not os.path.exists(index_path):
+        raise HTTPException(status_code=404, detail="Frontend not found")
+    with open(index_path, "r") as f:
+        return HTMLResponse(content=f.read())
 
 
-@app.get("/features")
+@app.get("/features", dependencies=[Depends(verify_credentials)])
 def get_features():
     return {
         "features":      FEATURE_METADATA,
@@ -219,7 +261,8 @@ def get_features():
     }
 
 
-@app.post("/predict", response_model=PredictResponse)
+@app.post("/predict", response_model=PredictResponse,
+          dependencies=[Depends(verify_credentials)])
 def predict(request: PredictRequest):
     feature_values = {
         "ethnicity":      request.ethnicity,
@@ -233,6 +276,7 @@ def predict(request: PredictRequest):
 
 @app.get("/health")
 def health():
+    # Left unprotected intentionally for Render uptime checks
     return {
         "status":        "ok",
         "models_loaded": len(MODELS),

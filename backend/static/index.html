@@ -32,15 +32,15 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); color: var(--ink); font-size: 16px; line-height: 1.65; min-height: 100vh; }
+body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); color: var(--ink); font-size: 19px; line-height: 1.65; min-height: 100vh; }
 
 /* INSTITUTIONAL BAR */
 .inst-bar { background: var(--navy); padding: 10px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .inst-logos { display: flex; align-items: center; gap: 28px; }
-.logo-bch .logo-main, .logo-kki .logo-main { font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 13px; color: white; letter-spacing: 0.01em; line-height: 1.2; }
-.logo-bch .logo-sub, .logo-kki .logo-sub { font-size: 9px; color: rgba(255,255,255,0.55); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; }
-.logo-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.2); }
-.collab-tag { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 300; }
+.logo-img-bch { height: 43px; width: auto; display: block; }
+.logo-img-kki { height: 43px; width: auto; display: block; }
+.logo-divider { width: 1px; height: 48px; background: rgba(255,255,255,0.2); }
+.collab-tag { font-size: 13px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 300; }
 
 /* HERO */
 .hero { background: linear-gradient(155deg, var(--navy) 0%, var(--navy-mid) 60%, #1a4080 100%); color: white; padding: 56px 40px 52px; position: relative; overflow: hidden; }
@@ -49,21 +49,21 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,146,58,0.15); border: 1px solid rgba(200,146,58,0.35); border-radius: 20px; padding: 5px 14px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #F0C878; margin-bottom: 20px; }
 .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: #F0C878; border-radius: 50%; animation: pulse 2.5s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
-.hero h1 { font-family: 'Lora', serif; font-size: clamp(26px, 4vw, 40px); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; max-width: 680px; }
+.hero h1 { font-family: 'Lora', serif; font-size: clamp(31px, 5vw, 48px); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; max-width: 680px; }
 .hero h1 em { font-style: italic; color: #A8C8F0; }
-.hero-desc { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 580px; line-height: 1.7; margin-bottom: 28px; font-weight: 300; }
+.hero-desc { font-size: 19px; color: rgba(255,255,255,0.75); max-width: 580px; line-height: 1.7; margin-bottom: 28px; font-weight: 300; }
 .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
 .hero-stat { display: flex; flex-direction: column; gap: 2px; }
-.hero-stat .num { font-family: 'Source Code Pro', monospace; font-size: 22px; font-weight: 500; color: #F0C878; line-height: 1; }
-.hero-stat .lbl { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.07em; text-transform: uppercase; }
+.hero-stat .num { font-family: 'Source Code Pro', monospace; font-size: 26px; font-weight: 500; color: #F0C878; line-height: 1; }
+.hero-stat .lbl { font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.07em; text-transform: uppercase; }
 
 /* ABOUT */
 .about-section { background: var(--white); border-bottom: 1px solid var(--border); }
 .about-inner { max-width: 1100px; margin: 0 auto; padding: 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
 .about-block { padding: 8px 32px 8px 0; border-right: 1px solid var(--border); margin-right: 32px; }
 .about-block:last-child { border-right: none; margin-right: 0; padding-right: 0; }
-.about-block h3 { font-family: 'Lora', serif; font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
-.about-block p { font-size: 13.5px; color: var(--ink-mid); line-height: 1.65; }
+.about-block h3 { font-family: 'Lora', serif; font-size: 17px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+.about-block p { font-size: 16px; color: var(--ink-mid); line-height: 1.65; }
 
 /* TOOL LAYOUT */
 .tool-wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; display: grid; grid-template-columns: 1fr 400px; gap: 28px; align-items: start; }
@@ -71,9 +71,9 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 /* FORM CARD */
 .form-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
 .card-header { background: var(--navy-faint); border-bottom: 1px solid var(--border); padding: 18px 28px; display: flex; align-items: center; gap: 10px; }
-.card-header h2 { font-family: 'Lora', serif; font-size: 17px; font-weight: 600; color: var(--navy); }
-.card-header .step-badge { margin-left: auto; background: var(--navy); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
-.form-instructions { padding: 16px 28px; background: var(--gold-light); border-bottom: 1px solid #EDD9B0; font-size: 13px; color: #6B4A10; display: flex; gap: 10px; align-items: flex-start; }
+.card-header h2 { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; color: var(--navy); }
+.card-header .step-badge { margin-left: auto; background: var(--navy); color: white; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+.form-instructions { padding: 16px 28px; background: var(--gold-light); border-bottom: 1px solid #EDD9B0; font-size: 16px; color: #6B4A10; display: flex; gap: 10px; align-items: flex-start; }
 
 /* FEATURE ROWS */
 .feature-row { padding: 18px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; transition: background 0.12s; }
@@ -81,12 +81,12 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 .feature-row.disabled { opacity: 0.45; pointer-events: none; }
 .feature-row.disabled:hover { background: transparent; }
 .feature-info { flex: 1; min-width: 0; }
-.feature-label { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 2px; }
-.feature-sublabel { font-size: 12px; color: var(--ink-muted); font-style: italic; }
+.feature-label { font-size: 17px; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 2px; }
+.feature-sublabel { font-size: 14px; color: var(--ink-muted); font-style: italic; }
 
 /* YES/NO BUTTONS */
 .yn-group { display: flex; border: 1.5px solid var(--border); border-radius: 6px; overflow: hidden; flex-shrink: 0; }
-.yn-btn { padding: 7px 18px; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 500; border: none; background: var(--white); color: var(--ink-muted); cursor: pointer; transition: background 0.15s, color 0.15s; border-right: 1.5px solid var(--border); outline: none; }
+.yn-btn { padding: 7px 18px; font-family: 'Source Sans 3', sans-serif; font-size: 16px; font-weight: 500; border: none; background: var(--white); color: var(--ink-muted); cursor: pointer; transition: background 0.15s, color 0.15s; border-right: 1.5px solid var(--border); outline: none; }
 .yn-btn:last-child { border-right: none; }
 .yn-btn.active-yes { background: var(--green); color: white; }
 .yn-btn.active-no { background: var(--navy); color: white; }
@@ -94,17 +94,17 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 
 /* FEMALE/MALE BUTTONS */
 .fm-group { display: flex; border: 1.5px solid var(--border); border-radius: 6px; overflow: hidden; flex-shrink: 0; }
-.fm-btn { padding: 7px 16px; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 500; border: none; background: var(--white); color: var(--ink-muted); cursor: pointer; transition: background 0.15s, color 0.15s; border-right: 1.5px solid var(--border); outline: none; }
+.fm-btn { padding: 7px 16px; font-family: 'Source Sans 3', sans-serif; font-size: 16px; font-weight: 500; border: none; background: var(--white); color: var(--ink-muted); cursor: pointer; transition: background 0.15s, color 0.15s; border-right: 1.5px solid var(--border); outline: none; }
 .fm-btn:last-child { border-right: none; }
 .fm-btn.active { background: var(--navy-mid); color: white; }
 .fm-btn:not(.active):hover { background: var(--navy-light); color: var(--navy); }
 
 /* DEPENDS NOTE */
-.depends-note { font-size: 11px; color: var(--ink-muted); font-style: italic; padding: 6px 28px 12px 28px; margin-top: -10px; border-bottom: 1px solid var(--border); background: var(--navy-faint); }
+.depends-note { font-size: 13px; color: var(--ink-muted); font-style: italic; padding: 6px 28px 12px 28px; margin-top: -10px; border-bottom: 1px solid var(--border); background: var(--navy-faint); }
 
 /* PREDICT BUTTON */
 .predict-section { padding: 20px 28px; background: var(--navy-faint); border-top: 1px solid var(--border); }
-.btn-predict { width: 100%; height: 52px; background: var(--navy); color: white; border: none; border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.03em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.15s, box-shadow 0.15s, transform 0.1s; box-shadow: 0 2px 8px rgba(11,37,69,0.25); }
+.btn-predict { width: 100%; height: 52px; background: var(--navy); color: white; border: none; border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif; font-size: 18px; font-weight: 600; letter-spacing: 0.03em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.15s, box-shadow 0.15s, transform 0.1s; box-shadow: 0 2px 8px rgba(11,37,69,0.25); }
 .btn-predict:hover { background: var(--navy-mid); box-shadow: 0 4px 16px rgba(11,37,69,0.3); }
 .btn-predict:active { transform: scale(0.99); }
 .btn-predict:disabled { background: var(--ink-muted); box-shadow: none; cursor: not-allowed; }
@@ -112,10 +112,10 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 .btn-predict.loading .spinner { display: block; }
 .btn-predict.loading .btn-text { opacity: 0.7; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.predict-note { margin-top: 10px; font-size: 12px; color: var(--ink-muted); text-align: center; }
+.predict-note { margin-top: 10px; font-size: 14px; color: var(--ink-muted); text-align: center; }
 
 /* API STATUS */
-.api-status { padding: 10px 28px; display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--ink-muted); border-top: 1px solid var(--border); }
+.api-status { padding: 10px 28px; display: flex; align-items: center; gap: 7px; font-size: 14px; color: var(--ink-muted); border-top: 1px solid var(--border); }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-muted); flex-shrink: 0; }
 .status-dot.ok { background: var(--green); }
 .status-dot.error { background: var(--crimson); }
@@ -124,7 +124,7 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 .results-panel { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
 .empty-state { background: var(--white); border: 1.5px dashed var(--border); border-radius: var(--radius-lg); padding: 44px 28px; text-align: center; }
 .empty-state .empty-icon { width: 48px; height: 48px; margin: 0 auto 14px; opacity: 0.2; }
-.empty-state p { font-size: 14px; color: var(--ink-muted); line-height: 1.6; }
+.empty-state p { font-size: 17px; color: var(--ink-muted); line-height: 1.6; }
 
 /* RESULT CARDS */
 .result-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s ease; }
@@ -134,36 +134,36 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 .consensus-card.risk-Moderate { border-color: var(--gold); }
 .consensus-card.risk-Low      { border-color: var(--green); }
 .consensus-top { padding: 20px 24px 16px; }
-.risk-badge { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; }
+.risk-badge { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; }
 .risk-High     .risk-badge { background: var(--crimson-lt); color: var(--crimson); }
 .risk-Moderate .risk-badge { background: var(--gold-light); color: #7A4800; }
 .risk-Low      .risk-badge { background: var(--green-light); color: var(--green); }
-.verdict { font-family: 'Lora', serif; font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--navy); letter-spacing: -0.01em; }
+.verdict { font-family: 'Lora', serif; font-size: 25px; font-weight: 600; line-height: 1.25; color: var(--navy); letter-spacing: -0.01em; }
 .prob-section { padding: 0 24px 20px; border-bottom: 1px solid var(--border); }
 .prob-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-.prob-label { font-size: 12px; color: var(--ink-muted); }
-.prob-value { font-family: 'Source Code Pro', monospace; font-size: 20px; font-weight: 500; color: var(--navy); }
+.prob-label { font-size: 14px; color: var(--ink-muted); }
+.prob-value { font-family: 'Source Code Pro', monospace; font-size: 24px; font-weight: 500; color: var(--navy); }
 .prob-track { height: 7px; background: var(--border); border-radius: 7px; overflow: hidden; }
 .prob-fill { height: 100%; width: 0%; border-radius: 7px; transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1); }
 .risk-High     .prob-fill { background: var(--crimson); }
 .risk-Moderate .prob-fill { background: var(--gold); }
 .risk-Low      .prob-fill { background: var(--green); }
-.breakdown-header { padding: 14px 20px 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-muted); border-bottom: 1px solid var(--border); }
+.breakdown-header { padding: 14px 20px 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-muted); border-bottom: 1px solid var(--border); }
 .model-row { padding: 11px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
 .model-row:last-child { border-bottom: none; }
-.model-name { font-size: 13px; font-weight: 500; flex: 1; color: var(--ink); }
-.model-prob { font-family: 'Source Code Pro', monospace; font-size: 12.5px; color: var(--ink-muted); min-width: 38px; text-align: right; }
+.model-name { font-size: 16px; font-weight: 500; flex: 1; color: var(--ink); }
+.model-prob { font-family: 'Source Code Pro', monospace; font-size: 15px; color: var(--ink-muted); min-width: 38px; text-align: right; }
 .fold-bars { display: flex; gap: 3px; align-items: flex-end; height: 18px; }
 .fold-bar { width: 5px; background: var(--border); border-radius: 2px; }
-.model-chip { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
+.model-chip { font-size: 13px; font-weight: 600; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
 .chip-pos { background: var(--crimson-lt); color: var(--crimson); }
 .chip-neg { background: var(--green-light); color: var(--green); }
-.disclaimer-card { padding: 16px 20px; font-size: 12.5px; color: var(--ink-mid); line-height: 1.6; }
-.disclaimer-card strong { display: block; color: var(--navy); font-weight: 600; margin-bottom: 6px; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; }
+.disclaimer-card { padding: 16px 20px; font-size: 15px; color: var(--ink-mid); line-height: 1.6; }
+.disclaimer-card strong { display: block; color: var(--navy); font-weight: 600; margin-bottom: 6px; font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; }
 
 /* FOOTER */
-footer { background: var(--navy); color: rgba(255,255,255,0.5); text-align: center; padding: 28px 40px; font-size: 12.5px; line-height: 1.7; border-top: 3px solid var(--gold); }
-footer .footer-logos { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 12px; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; color: rgba(255,255,255,0.6); }
+footer { background: var(--navy); color: rgba(255,255,255,0.5); text-align: center; padding: 28px 40px; font-size: 15px; line-height: 1.7; border-top: 3px solid var(--gold); }
+footer .footer-logos { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 12px; font-size: 14px; font-weight: 500; letter-spacing: 0.05em; color: rgba(255,255,255,0.6); }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
@@ -188,23 +188,21 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
 
 <div class="inst-bar">
   <div class="inst-logos">
-    <div class="logo-bch">
-      <div class="logo-main">Boston Children's Hospital</div>
-      <div class="logo-sub">Until Every Child Is Well</div>
-    </div>
+    <a href="https://www.childrenshospital.org/services/sturge-weber-syndrome-clinic" target="_blank" rel="noopener">
+      <img src="/static/Boston_Childrens_Hospital_logo.svg" alt="Boston Children's Hospital" class="logo-img-bch"/>
+    </a>
     <div class="logo-divider"></div>
-    <div class="logo-kki">
-      <div class="logo-main">Kennedy Krieger Institute</div>
-      <div class="logo-sub">Improving Children's Lives</div>
-    </div>
+    <a href="https://www.kennedykrieger.org/patient-care/centers-and-programs/sturge-weber-syndrome-center" target="_blank" rel="noopener">
+      <img src="/static/Kennedy_Krieger_Institute_logo.svg" alt="Kennedy Krieger Institute" class="logo-img-kki"/>
+    </a>
   </div>
   <div class="collab-tag">Collaborative Research Tool</div>
 </div>
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">Sturge-Weber Syndrome</div>
-    <h1>Predict <em>Seizure Onset Risk</em><br>in the Next Two Years</h1>
+    <a href="https://www.ninds.nih.gov/health-information/disorders/sturge-weber-syndrome" target="_blank" rel="noopener" class="hero-eyebrow" style="font-size:13.5px;text-decoration:none;">Sturge-Weber Syndrome <i class="fas fa-external-link"></i></a>
+    <h1>Predict <em>Seizure Onset Risk</em><br>by the age of 2 Years</h1>
     <p class="hero-desc">A clinical decision support tool developed through collaboration between Boston Children's Hospital and Kennedy Krieger Institute. Uses an ensemble of machine learning models trained on SWS patient data to estimate the probability of seizure onset within 24 months.</p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num">15</span><span class="lbl">Models in Ensemble</span></div>
@@ -312,7 +310,7 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
           <div class="spinner"></div>
           <span class="btn-text">Calculate Seizure Onset Risk</span>
         </button>
-        <p class="predict-note">15-model ensemble with Method 2 aggregation</p>
+        <p class="predict-note">15-model ensemble &bull; averaged across 3 model types &times; 5 folds</p>
       </div>
     </div>
   </div>
@@ -327,21 +325,26 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
 
 <footer>
   <div class="footer-logos">
-    <span>Boston Children's Hospital</span>
+    <a href="https://www.childrenshospital.org/services/sturge-weber-syndrome-clinic" target="_blank" rel="noopener">
+      <img src="/static/Boston_Childrens_Hospital_logo.svg" alt="Boston Children's Hospital" style="height:31px;width:auto;opacity:0.75;"/>
+    </a>
     <span style="opacity:0.3">|</span>
-    <span>Kennedy Krieger Institute</span>
+    <a href="https://www.kennedykrieger.org/patient-care/centers-and-programs/sturge-weber-syndrome-center" target="_blank" rel="noopener">
+      <img src="/static/Kennedy_Krieger_Institute_logo.svg" alt="Kennedy Krieger Institute" style="height:31px;width:auto;opacity:0.75;"/>
+    </a>
   </div>
   <p>This tool is intended for <strong style="color:rgba(255,255,255,0.8)">research and clinical decision support purposes only</strong>.<br>
   It does not constitute medical advice and must not replace the clinical judgment of a qualified physician.<br>
   For questions, contact the SWS research teams at BCH or Kennedy Krieger Institute.</p>
-  <p style="margin-top:10px;font-size:11.5px;opacity:0.4;">Developed in collaboration with Boston Children's Hospital and Kennedy Krieger Institute &bull; 15-model ensemble (Random Forest, Gaussian SVC, Linear SVC) &bull; Features selected via FIBE algorithm</p>
+  <p style="margin-top:10px;font-size:14px;opacity:0.4;">Developed at Boston Children's Hospital in collaboration with Kennedy Krieger Institute &bull; 15-model ensemble (Random Forest, Gaussian SVC, Linear SVC) &bull; Features selected via <a href="https://github.com/i3-research/fibe" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.6);text-decoration:underline;">FIBE algorithm</a></p>
 </footer>
 
 <script>
 // UPDATE THIS to your Render backend URL once deployed
 // e.g. "https://sws-seizure-predictor.onrender.com"
 // Leave as localhost for local testing
-const API_BASE = "https://sws-seizure-predictor.onrender.com";
+// Made with Claude.ai - Ankush 030326
+const API_BASE = "";  // same server
 
 const featureValues = {
   ethnicity:      null,
