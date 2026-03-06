@@ -217,7 +217,7 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
   <div class="about-inner">
     <div class="about-block fade-in">
       <h3>About This Tool</h3>
-      <p>This tool applies machine learning to predict seizure onset in patients diagnosed with Sturge-Weber Syndrome (SWS), a rare neurocutaneous disorder. Predictions are based on five clinically obtained binary features and are intended to support, not replace, physician judgment.</p>
+      <p>This tool applies machine learning to predict seizure onset in patients diagnosed with Sturge-Weber Syndrome (SWS), a rare neurocutaneous and neurovascular disorder. <strong>Important:</strong> This tool applies only to patients who have already been determined to have SWS brain involvement on MRI with and without contrast. It is not intended for at-risk patients with a port wine birthmark who have not yet had brain involvement confirmed on MRI. Predictions are based on five clinically obtained binary features and are intended to support, not replace, physician judgment.</p>
     </div>
     <div class="about-block fade-in">
       <h3>How It Works</h3>
@@ -241,7 +241,7 @@ footer .footer-logos { display: flex; justify-content: center; align-items: cent
 
       <div class="form-instructions">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Select the appropriate value for each feature based on the patient's clinical presentation. All fields are required before calculating.
+        For use only in patients with confirmed SWS brain involvement on MRI with and without contrast. Select the appropriate value for each feature based on the patient's clinical presentation. All fields are required before calculating.
       </div>
 
       <div class="feature-row" id="row-ethnicity">
@@ -391,7 +391,7 @@ function validate() {
 async function checkApi() {
   try {
     const res = await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(4000) });
-    setStatus(res.ok, res.ok ? `API connected (${API_BASE})` : 'API reachable but returned an error');
+    setStatus(res.ok, res.ok ? 'API Connected' : 'API reachable but returned an error');
   } catch {
     setStatus(false, `Cannot reach API at ${API_BASE}`);
   }
